@@ -1,7 +1,5 @@
 # NeuroSymbolic AI Framework for Interpretable STEM Tutoring Systems
 
-[![NeuroSymbolic AI STEM Tutor](https://img.shields.io/badge/NeuroSymbolic-AI%20Tutoring-blueviolethttpsM Subjects](https://img.shields.io/badge/STEM-Algebra%20Physics%20Calculus-green?style=flat-squarehttpseractive Dashboard](https://img.shields.io/badge/Interactive-Dashboard-orange?style=flat-squarehttpsProject Overview
-
 A modern, interpretable AI-powered tutoring platform combining **Neural Networks** (pattern recognition) and **Symbolic Reasoning** (logical rules) to provide transparent, step-by-step STEM tutoring with real-time feedback, adaptive hints, and comprehensive learning analytics.
 
 ## ✨ Features
