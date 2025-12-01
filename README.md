@@ -1,4 +1,4 @@
-NeuroSymbolic AI Tutor 🧠📚
+## NeuroSymbolic AI Tutor 🧠📚
 
 **NeuroSymbolic AI Tutor** is an interactive web-based educational platform that combines **Convolutional Neural Networks (CNNs)** with mathematical pattern recognition. Students can draw basic geometric shapes (Circle, Square, Triangle, Line) on a canvas, and the AI instantly recognizes and classifies them using a custom-trained TensorFlow.js CNN model.
 
