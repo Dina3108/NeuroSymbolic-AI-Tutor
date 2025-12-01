@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NeuroSymbolic AI Tutor - Classes</title>
+    <style>
+      :root {
+        --primary-color: #4a90e2;
+        --primary-color-dark: #357abd;
+        --background-color: #f0f4fa;
+        --text-color: #222;
+        --button-background: #4a90e2;
+        --button-hover: #357abd;
+        --font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        --shadow-light: rgba(74, 144, 226, 0.25);
+        --shadow-strong: rgba(74, 144, 226, 0.45);
+        --transition-speed: 0.3s;
+      }
+
+      body {
+        margin: 0;
+        background: var(--background-color);
+        font-family: var(--font-family);
+        color: var(--text-color);
+        user-select: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      header {
+        width: 100%;
+        background-color: var(--primary-color-dark);
+        color: white;
+        padding: 1.5rem 0;
+        text-align: center;
+        font-size: 2.25rem;
+        font-weight: 900;
+        letter-spacing: 2px;
+        user-select: none;
+        box-shadow: 0 4px 12px var(--shadow-light);
+        margin-bottom: 2rem;
+      }
+
+      main {
+        width: 90%;
+        max-width: 800px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 2rem;
+      }
+
+      .class-link {
+        background-color: var(--button-background);
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 12px;
+        padding: 2rem 2rem;
+        font-size: 1.2rem;
+        font-weight: 700;
+        text-align: center;
+        box-shadow: 0 8px 20px var(--shadow-light);
+        cursor: pointer;
+        transition: background-color var(--transition-speed),
+          box-shadow var(--transition-speed), transform var(--transition-speed);
+        user-select: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100px;
+      }
+
+      .class-link:hover,
+      .class-link:focus {
+        background-color: var(--button-hover);
+        box-shadow: 0 12px 30px var(--shadow-strong);
+        transform: translateY(-4px);
+        outline: none;
+        color: white;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        header {
+          font-size: 2rem;
+          padding: 1.2rem 0;
+        }
+        main {
+          grid-template-columns: 1fr;
+          gap: 25px;
+          width: 95%;
+        }
+        .class-link {
+          font-size: 1.1rem;
+          padding: 1.8rem 1.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        header {
+          font-size: 1.5rem;
+          padding: 1rem 0;
+        }
+        main {
+          max-width: 300px;
+          gap: 20px;
+        }
+        .class-link {
+          font-size: 1rem;
+          padding: 1.5rem 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>NeuroSymbolic AI STEM Tutor</header>
+    <main id="classesContainer">
+      <!-- Links appended by JS -->
+    </main>
+
+    <script>
+      // List of classes with their navigation URLs
+      const classes = [
+        { name: "Class 6", url: "cls_6_maths.html" },
+        { name: "Class 7", url: "class-7.html" },
+        { name: "Class 8", url: "class-8.html" },
+        { name: "Class 9", url: "class-9.html" },
+        { name: "Class 10", url: "class-10.html" },
+        { name: "Class 11", url: "class-11.html" },
+        { name: "Class 12", url: "class-12.html" },
+        { name: "Undergraduate", url: "undergraduate.html" },
+        { name: "Post Graduate", url: "post-graduate.html" },
+        { name: "Advanced Mathematics", url: "advanced-math.html" },
+      ];
+
+      const container = document.getElementById("classesContainer");
+
+      // Create anchor link buttons for each class
+      classes.forEach((classItem) => {
+        const link = document.createElement("a");
+        link.className = "class-link";
+        link.href = classItem.url;
+        link.textContent = classItem.name;
+        link.setAttribute("aria-label", `Go to ${classItem.name} section`);
+        link.tabIndex = 0;
+
+        // Keyboard navigation support
+        link.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            window.location.href = link.href;
+          }
+        });
+
+        container.appendChild(link);
+      });
+    </script>
+  </body>
+</html>

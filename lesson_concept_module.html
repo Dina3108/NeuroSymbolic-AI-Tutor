@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Patterns in Mathematics - Complete Interactive Module</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+      async
+    ></script>
+    <style>
+      :root {
+        --primary-color: #4a90e2;
+        --primary-color-dark: #357abd;
+        --background-color: #f0f4fa;
+        --text-color: #222;
+        --feedback-bg: #dff0d8;
+        --feedback-border: #a0d68d;
+        --hint-bg: #fff3cd;
+        --hint-border: #ffeeba;
+        --explanation-bg: #e9ecef;
+        --shadow-light: rgba(74, 144, 226, 0.25);
+        --shadow-strong: rgba(74, 144, 226, 0.45);
+        --font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        --transition-speed: 0.3s;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: var(--font-family);
+        margin: 0;
+        padding: 20px;
+        background: var(--background-color);
+        color: var(--text-color);
+        line-height: 1.7;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--primary-color-dark)
+        );
+        color: white;
+        padding: 2.5rem;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 20px 40px var(--shadow-light);
+        margin-bottom: 3rem;
+      }
+      h1 {
+        margin: 0 0 1rem 0;
+        font-size: 2.8rem;
+        font-weight: 900;
+      }
+      .subtitle {
+        font-size: 1.2rem;
+        opacity: 0.95;
+        margin: 0;
+      }
+      .chapter-section {
+        background: white;
+        padding: 3rem;
+        border-radius: 25px;
+        box-shadow: 0 15px 40px var(--shadow-light);
+        margin-bottom: 3rem;
+      }
+      .chapter-title {
+        color: var(--primary-color-dark);
+        font-size: 2.2rem;
+        margin-bottom: 2rem;
+        border-bottom: 5px solid var(--primary-color);
+        padding-bottom: 1.2rem;
+      }
+      .learning-content {
+        background: linear-gradient(135deg, #f8fcff 0%, #e8f4ff 100%);
+        padding: 2rem;
+        border-radius: 20px;
+        border-left: 8px solid var(--primary-color);
+        margin-bottom: 2.5rem;
+        font-size: 1.15rem;
+        box-shadow: 0 8px 25px rgba(74, 144, 226, 0.1);
+      }
+      .learning-content h3 {
+        color: var(--primary-color-dark);
+        margin-top: 0;
+        font-size: 1.4rem;
+      }
+      .learning-content ul {
+        padding-left: 2rem;
+        margin: 1rem 0;
+      }
+      .problem-card {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 20px;
+        box-shadow: 0 12px 35px var(--shadow-light);
+        margin-bottom: 2rem;
+        border: 1px solid rgba(74, 144, 226, 0.1);
+      }
+      .problem-title {
+        font-size: 1.6rem;
+        color: var(--primary-color-dark);
+        margin-bottom: 1.2rem;
+        font-weight: 800;
+      }
+      .problem-step {
+        border-left: 6px solid var(--primary-color);
+        background: linear-gradient(135deg, #e7f3fe, #d4eaff);
+        margin: 1.5rem 0;
+        padding: 1.5rem;
+        border-radius: 12px;
+        color: var(--primary-color-dark);
+        font-weight: 600;
+      }
+      textarea {
+        width: 100%;
+        height: 120px;
+        font-size: 16px;
+        padding: 16px;
+        border-radius: 15px;
+        border: 3px solid #a8b9d9;
+        resize: vertical;
+        font-family: var(--font-family);
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+      }
+      textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 20px var(--shadow-light);
+        transform: translateY(-2px);
+      }
+      .btn-group {
+        display: flex;
+        gap: 1.2rem;
+        flex-wrap: wrap;
+      }
+      button {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--primary-color-dark)
+        );
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 700;
+        transition: all var(--transition-speed);
+        font-size: 1.1rem;
+        box-shadow: 0 6px 20px var(--shadow-light);
+      }
+      button:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px var(--shadow-strong);
+      }
+      .feedback,
+      .hint-section {
+        margin-top: 2rem;
+        padding: 1.8rem;
+        border-radius: 15px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        display: none;
+      }
+      .feedback.success {
+        background: linear-gradient(135deg, var(--feedback-bg), #d4edda);
+        border: 3px solid var(--feedback-border);
+        color: #2d5a1a;
+      }
+      .feedback.error {
+        background: linear-gradient(135deg, #f8d7da, #f5c2c7);
+        border: 3px solid #f5c6cb;
+        color: #721c24;
+      }
+      .hint-section {
+        background: linear-gradient(135deg, var(--hint-bg), #fff2cc);
+        border: 3px solid var(--hint-border);
+        color: #856404;
+      }
+      .explanation-section {
+        margin-top: 2.5rem;
+        background: linear-gradient(135deg, var(--explanation-bg), #dee2e6);
+        padding: 2.5rem;
+        border-radius: 20px;
+        border-left: 8px solid var(--primary-color);
+        display: none;
+      }
+      .explanation-section ol {
+        font-size: 1.1rem;
+        line-height: 1.8;
+      }
+      .reasoning-btn {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        color: white;
+        padding: 1.2rem 2.5rem;
+        text-decoration: none;
+        border-radius: 15px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        font-weight: 800;
+        font-size: 1.1rem;
+        box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+        transition: all var(--transition-speed);
+        margin-top: 2rem;
+      }
+      .reasoning-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 45px rgba(255, 107, 107, 0.5);
+        color: white;
+      }
+      @media (max-width: 768px) {
+        body {
+          padding: 10px;
+        }
+        .btn-group {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        h1 {
+          font-size: 2.2rem;
+        }
+        .chapter-title {
+          font-size: 1.8rem;
+        }
+        .chapter-section {
+          padding: 2rem;
+        }
+      }
+      .ai-but {
+        margin-bottom: 30px;
+        margin-top: -30px;
+        padding: 3px 5px 3px 5px;
+        background-color: white;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🧮 Patterns in Mathematics</h1>
+        <p class="subtitle">
+          Complete Interactive Learning from Ganita Prakash Grade 6 [file:10]
+        </p>
+      </header>
+      <center>
+        <a style="text-decoration: none" href="CNN.html">
+          <button class="ai-but">
+            <p>⚡AI Powered Learning</p>
+          </button>
+        </a>
+      </center>
+      <!-- Chapter 1: Introduction to Patterns -->
+      <div class="chapter-section">
+        <h2 class="chapter-title">📖 Chapter 1.1: What is Mathematics?</h2>
+
+        <div class="learning-content">
+          <h3>🎯 Core Concept from PDF [file:10]</h3>
+          <p>
+            <strong
+              >"Mathematics is, in large part, the search for patterns, and for
+              the explanations as to why those patterns exist."</strong
+            >
+            Such patterns exist all around us—in nature, in our homes and
+            schools, and in the motion of the sun, moon, and stars. They occur
+            in everything we do: from shopping and cooking, to throwing a ball
+            and playing games, to understanding weather patterns and using
+            technology.
+          </p>
+
+          <p>
+            Mathematics aims not just to find patterns, but to explain
+            <em>why</em> they exist. These explanations propel humanity
+            forward—understanding star patterns led to gravitation theory and
+            space travel; genome patterns help cure diseases [file:10].
+          </p>
+
+          <ul>
+            <li>
+              🪐 <strong>Astronomy:</strong> Star patterns → Gravity → Space
+              missions
+            </li>
+            <li>
+              🧬 <strong>Biology:</strong> Genome patterns → Disease cures
+            </li>
+            <li>
+              🏠 <strong>Daily Life:</strong> Shopping, cooking, building,
+              technology
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Chapter 1.2: Number Sequences -->
+      <div class="chapter-section">
+        <h2 class="chapter-title">
+          🔢 Chapter 1.2: Fundamental Number Sequences
+        </h2>
+
+        <div class="learning-content">
+          <h3>📊 Key Sequences from Table 1 [file:10]</h3>
+          <p>
+            Number theory studies patterns in whole numbers (0, 1, 2, 3...).
+            Here are the most important sequences:
+          </p>
+
+          <table style="width: 100%; border-collapse: collapse; margin: 1rem 0">
+            <tr style="background: var(--primary-color); color: white">
+              <th>Sequence</th>
+              <th>Numbers</th>
+              <th>Rule</th>
+            </tr>
+            <tr>
+              <td>All 1s</td>
+              <td>1, 1, 1, 1...</td>
+              <td>Constant 1</td>
+            </tr>
+            <tr>
+              <td>Counting</td>
+              <td>1, 2, 3, 4...</td>
+              <td>\(n\)</td>
+            </tr>
+            <tr>
+              <td>Odd</td>
+              <td>1, 3, 5, 7...</td>
+              <td>\(2n-1\)</td>
+            </tr>
+            <tr>
+              <td>Even</td>
+              <td>2, 4, 6, 8...</td>
+              <td>\(2n\)</td>
+            </tr>
+            <tr>
+              <td>Squares</td>
+              <td>1, 4, 9, 16...</td>
+              <td>\(n^2\)</td>
+            </tr>
+            <tr>
+              <td>Triangular</td>
+              <td>1, 3, 6, 10...</td>
+              <td>\(n(n+1)/2\)</td>
+            </tr>
+            <tr>
+              <td>Cubes</td>
+              <td>1, 8, 27, 64...</td>
+              <td>\(n^3\)</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Practice Question 1 -->
+        <div class="problem-card">
+          <div class="problem-title">
+            ❓ Practice Q1: Magic of Odd Numbers [file:10]
+          </div>
+          <div class="problem-step">
+            <strong>Discovery:</strong> Sum of first <span>\(n\)</span> odd
+            numbers = <span>\(n^2\)</span><br />
+            Verify: \(1 + 3 + 5 + 7 + 9 = ?\)
+          </div>
+          <textarea
+            id="q1-answer"
+            placeholder="Enter your calculation (should be 25)"
+          ></textarea>
+          <div class="btn-group">
+            <button onclick="checkAnswer('q1-answer', 25, '1+3+5+7+9=25=5²')">
+              ✅ Submit
+            </button>
+            <button onclick="showHint('q1-hint')">💡 Hint</button>
+          </div>
+          <div id="q1-feedback" class="feedback"></div>
+          <div id="q1-hint" class="hint-section">Hint: Calculate 5² = 25</div>
+        </div>
+      </div>
+
+      <!-- Chapter 1.3: Visual Patterns -->
+      <div class="chapter-section">
+        <h2 class="chapter-title">👁️ Chapter 1.3: Visualizing Sequences</h2>
+
+        <div class="learning-content">
+          <h3>🖼️ Pictorial Representations [file:10]</h3>
+          <p>Visual patterns reveal why sequences work:</p>
+          <ul>
+            <li>
+              <strong>Triangular:</strong> Dots form triangle → 1, 1+2, 1+2+3...
+            </li>
+            <li>
+              <strong>Square:</strong> Dots form \(n \times n\) grid → \(n^2\)
+            </li>
+            <li><strong>Cube:</strong> 3D cubes → \(n^3\)</li>
+            <li>
+              <strong>36 is special:</strong> Both triangular AND square number!
+              [file:10]
+            </li>
+          </ul>
+
+          <p>
+            <strong>Hexagonal numbers:</strong> 1, 7, 19, 37... form hexagons
+            [file:10]
+          </p>
+        </div>
+
+        <!-- Practice Question 2 -->
+        <div class="problem-card">
+          <div class="problem-title">❓ Practice Q2: 7th Triangular Number</div>
+          <div class="problem-step">
+            \(T_n = \frac{n(n+1)}{2}\). Find \(T_7\):
+          </div>
+          <textarea id="q2-answer" placeholder="Use formula n=7..."></textarea>
+          <div class="btn-group">
+            <button onclick="checkAnswer('q2-answer', 28, 'T_7 = 7×8/2 = 28')">
+              ✅ Submit
+            </button>
+            <button onclick="showHint('q2-hint')">💡 Hint</button>
+          </div>
+          <div id="q2-feedback" class="feedback"></div>
+          <div id="q2-hint" class="hint-section">
+            Hint: \(T_7 = \frac{7 \times 8}{2}\)
+          </div>
+        </div>
+      </div>
+
+      <!-- Chapter 1.4: Beautiful Relations -->
+      <div class="chapter-section">
+        <h2 class="chapter-title">✨ Chapter 1.4: Sequence Relationships</h2>
+
+        <div class="learning-content">
+          <h3>🔗 Surprising Connections [file:10]</h3>
+          <p>
+            <strong>Up-and-Down Pattern:</strong> 1, 1-2-1, 1-2-3-2-1... =
+            square numbers!
+          </p>
+          <ul>
+            <li>1 = 1²</li>
+            <li>1+2+1 = 4 = 2²</li>
+            <li>1+2+3+2+1 = 9 = 3²</li>
+            <li><strong>Pattern continues forever!</strong> [file:10]</li>
+          </ul>
+
+          <p>
+            <strong>Powers of 2:</strong> 1, 1+2=3, 1+2+4=7, 1+2+4+8=15...
+            (always 1 less than power of 2)
+          </p>
+        </div>
+
+        <!-- Practice Question 3 -->
+        <div class="problem-card">
+          <div class="problem-title">❓ Practice Q3: Powers of 2 Pattern</div>
+          <div class="problem-step">Sum: 1 + 2 + 4 + 8 = ? (Think: 16-1)</div>
+          <textarea id="q3-answer" placeholder="Calculate sum..."></textarea>
+          <div class="btn-group">
+            <button
+              onclick="checkAnswer('q3-answer', 15, '1+2+4+8=15=16-1=2^4-1')"
+            >
+              ✅ Submit
+            </button>
+            <button onclick="showHint('q3-hint')">💡 Hint</button>
+          </div>
+          <div id="q3-feedback" class="feedback"></div>
+          <div id="q3-hint" class="hint-section">
+            Hint: 2⁴ = 16, so 16-1 = 15
+          </div>
+        </div>
+      </div>
+
+      <!-- NeuroSymbolic Explanation -->
+      <div class="chapter-section">
+        <h2 class="chapter-title">🧠 NeuroSymbolic Reasoning & Proofs</h2>
+
+        <div class="explanation-section" id="main-explanation">
+          <h3>🎯 Why These Patterns Work [file:10]</h3>
+          <ol>
+            <li>
+              <strong>Odd → Square Proof:</strong> Each odd number (1,3,5...)
+              forms L-shape around previous square, completing next square
+            </li>
+            <li>
+              <strong>Triangular Formula:</strong> \(\sum_{k=1}^n k =
+              \frac{n(n+1)}{2}\) from row counting
+            </li>
+            <li>
+              <strong>Up-Down Magic:</strong> Symmetric counting fills square
+              grid perfectly
+            </li>
+            <li>
+              <strong>Powers of 2:</strong> Binary representation: each sum =
+              111...1 in binary = 2ⁿ-1
+            </li>
+          </ol>
+          <p>
+            <em
+              >"Visual proofs make abstract algebra concrete and reveal deep
+              mathematical truth"</em
+            >
+            [file:10]
+          </p>
+        </div>
+
+        <a href="#top" class="reasoning-btn">
+          🔗 Scroll to Practice Questions
+        </a>
+      </div>
+
+      <!-- Summary -->
+      <div class="chapter-section">
+        <h2 class="chapter-title">📚 Complete Summary [file:10]</h2>
+        <div class="learning-content">
+          <h3>Key Takeaways:</h3>
+          <ul>
+            <li>✅ Mathematics = Pattern discovery + explanation</li>
+            <li>✅ 8 fundamental sequences mastered</li>
+            <li>✅ Visual proofs > algebraic formulas</li>
+            <li>✅ Odd numbers → Squares (geometric proof!)</li>
+            <li>✅ All patterns have visual/pictorial explanations</li>
+            <li>✅ 36 = both triangular AND square number</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let questionHints = {};
+
+      function checkAnswer(inputId, correctAnswer, explanation) {
+        const input = document.getElementById(inputId);
+        const feedback = document.getElementById(
+          inputId.replace("-answer", "-feedback")
+        );
+        const mainExplanation = document.getElementById("main-explanation");
+
+        const userAnswer = input.value.trim().toLowerCase();
+        const normalizedCorrect = correctAnswer.toString().toLowerCase();
+
+        // Flexible checking
+        if (
+          userAnswer.includes(normalizedCorrect) ||
+          userAnswer.includes(correctAnswer.toString()) ||
+          (inputId.includes("q1") && userAnswer.includes("25")) ||
+          (inputId.includes("q2") && userAnswer.includes("28")) ||
+          (inputId.includes("q3") && userAnswer.includes("15"))
+        ) {
+          feedback.innerHTML = `✅ <strong>Perfect!</strong> ${explanation}`;
+          feedback.className = "feedback success";
+        } else {
+          feedback.innerHTML = `❌ <strong>Try again:</strong> ${explanation}`;
+          feedback.className = "feedback error";
+        }
+        feedback.style.display = "block";
+        mainExplanation.style.display = "block";
+
+        // Auto-scroll to explanation
+        mainExplanation.scrollIntoView({ behavior: "smooth" });
+      }
+
+      function showHint(hintId) {
+        const hint = document.getElementById(hintId);
+        if (hint.style.display === "block") {
+          hint.style.display = "none";
+        } else {
+          hint.style.display = "block";
+        }
+      }
+
+      // Smooth scrolling for reasoning buttons
+      document.querySelectorAll(".reasoning-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          document
+            .querySelector(e.target.closest("a").getAttribute("href"))
+            .scrollIntoView({
+              behavior: "smooth",
+            });
+        });
+      });
+    </script>
+  </body>
+</html>

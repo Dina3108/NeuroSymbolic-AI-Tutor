@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mathematics - NeuroSymbolic AI Tutor</title>
+    <style>
+      :root {
+        --primary-color: #4a90e2;
+        --primary-color-dark: #357abd;
+        --background-color: #f0f4fa;
+        --text-color: #222;
+        --button-background: #4a90e2;
+        --button-hover: #357abd;
+        --font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        --shadow-light: rgba(74, 144, 226, 0.25);
+        --shadow-strong: rgba(74, 144, 226, 0.45);
+        --transition-speed: 0.3s;
+      }
+
+      body {
+        margin: 0;
+        background: var(--background-color);
+        font-family: var(--font-family);
+        color: var(--text-color);
+        user-select: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      header {
+        width: 100%;
+        background-color: var(--primary-color-dark);
+        color: white;
+        padding: 1.5rem 0;
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 900;
+        letter-spacing: 2px;
+        user-select: none;
+        box-shadow: 0 4px 12px var(--shadow-light);
+        margin-bottom: 2rem;
+        position: relative;
+      }
+
+      .back-btn {
+        position: absolute;
+        top: 1.5rem;
+        left: 2rem;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all var(--transition-speed);
+        text-decoration: none;
+        backdrop-filter: blur(10px);
+      }
+
+      .back-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+      }
+
+      main {
+        width: 90%;
+        max-width: 1000px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 25px;
+        margin-bottom: 2rem;
+      }
+
+      .chapter-link {
+        background-color: #eaecef;
+        color: #037ef9;
+        text-decoration: none;
+        border: 2px solid #037ef9;
+        border-radius: 15px;
+        padding: 1rem 1rem;
+        font-size: 1.3rem;
+        font-weight: 700;
+        text-align: center;
+        box-shadow: 0 10px 25px var(--shadow-light);
+        cursor: pointer;
+        transition: all var(--transition-speed);
+        user-select: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 140px;
+        position: relative;
+        overflow: hidden;
+        line-height: 1.3;
+      }
+
+      .chapter-link::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .chapter-link:hover::before {
+        left: 100%;
+      }
+
+      .chapter-link:hover,
+      .chapter-link:focus {
+        color: white;
+        background-color: var(--button-hover);
+        box-shadow: 0 15px 40px var(--shadow-strong);
+        transform: translateY(-8px) scale(1.02);
+        outline: none;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        header {
+          font-size: 1.8rem;
+          padding: 1.2rem 0;
+        }
+        .back-btn {
+          left: 1rem;
+          font-size: 0.9rem;
+          padding: 0.2rem 1.2rem;
+        }
+        main {
+          grid-template-columns: 1fr;
+          gap: 20px;
+          width: 95%;
+        }
+        .chapter-link {
+          font-size: 1.2rem;
+          padding: 1.8rem 1.2rem;
+          min-height: 130px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        header {
+          font-size: 1.5rem;
+          padding: 1rem 0;
+        }
+        .chapter-link {
+          font-size: 1.1rem;
+          padding: 1.5rem 1rem;
+          min-height: 120px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>Mathematics Chapters</header>
+    <main id="chaptersContainer">
+      <!-- Links appended by JS -->
+    </main>
+
+    <script>
+      // New 10 Mathematics Chapters with direct hyperlinks
+      const chapters = [
+        {
+          name: "Patterns in Mathematics",
+          url: "lesson_concept_module.html",
+        },
+        {
+          name: "Lines and Angles",
+          url: "https://drive.google.com/file/d/1BBNlhEAHN2SAX2zjpTQX70GKhkuqvKaV/view?usp=drive_link",
+        },
+        {
+          name: "Number Play",
+          url: "https://drive.google.com/file/d/1b56FGajY0dvsBdPpboZO7ON4wx8bTIEt/view?usp=drive_link",
+        },
+        {
+          name: "Data Handling and Presentation",
+          url: "https://drive.google.com/file/d/1-u5fWbucLQABqaurxszIJvutrKl3ypff/view?usp=drive_link",
+        },
+        {
+          name: "Prime Time",
+          url: "https://drive.google.com/file/d/1RuvhcuwfqdsJEIF3fSyGKVT3N5F2u7xL/view?usp=drive_link",
+        },
+        {
+          name: "Perimeter and Area",
+          url: "https://drive.google.com/file/d/1hmqPecYuji0ABRNfWFzOhFp72MPs0j-C/view?usp=drive_link",
+        },
+        {
+          name: "Fractions",
+          url: "https://drive.google.com/file/d/1UIHr3tr8ukyZTryybNi8wl3gEYwwj4Tp/view?usp=drive_link",
+        },
+        {
+          name: "Playing with Constructions",
+          url: "https://drive.google.com/file/d/1wKbwu7QMN_VPHLEKfkeuKsB4v5hfZUpp/view?usp=drive_link",
+        },
+        {
+          name: "Symmetry",
+          url: "https://drive.google.com/file/d/1L6G5ToBym_aHi6ORzeBMgRv-C7QwfQDm/view?usp=drive_link",
+        },
+        {
+          name: "The Other Side of Zero",
+          url: "https://drive.google.com/file/d/10Zucv1Teb6e8Zh_5lbQOBaOsM3G6IrGH/view?usp=drive_link",
+        },
+      ];
+
+      const container = document.getElementById("chaptersContainer");
+
+      // Create chapter anchor links
+      chapters.forEach((chapter, index) => {
+        const link = document.createElement("a");
+        link.className = "chapter-link";
+        link.href = chapter.url;
+        link.textContent = chapter.name;
+        link.setAttribute("aria-label", `Open ${chapter.name} material`);
+        link.target = "_blank"; // Open in new tab
+        link.rel = "noopener noreferrer"; // Security best practice
+
+        // Keyboard navigation support
+        link.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            window.open(link.href, "_blank");
+          }
+        });
+
+        container.appendChild(link);
+      });
+    </script>
+  </body>
+</html>

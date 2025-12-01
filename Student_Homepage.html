@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NeuroSymbolic AI STEM Tutoring Dashboard</title>
+    <style>
+      :root {
+        --primary-color: #4a90e2;
+        --primary-color-dark: #357abd;
+        --success-color: #10b981;
+        --error-color: #ef4444;
+        --background-color: #f0f4fa;
+        --text-color: #222;
+        --card-background: #e4f0ff;
+        --shadow-light: rgba(74, 144, 226, 0.25);
+        --shadow-strong: rgba(74, 144, 226, 0.45);
+        --transition-speed: 0.3s;
+        --font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-family);
+        margin: 0;
+        background: var(--background-color);
+        color: var(--text-color);
+        user-select: none;
+        line-height: 1.6;
+      }
+
+      /* Header with Navigation Buttons */
+      header {
+        background-color: var(--primary-color-dark);
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 12px var(--shadow-light);
+      }
+
+      .header-nav {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .header-title {
+        font-size: 1.45rem;
+        font-weight: 900;
+        letter-spacing: 1px;
+        margin: 0;
+        user-select: none;
+      }
+
+      .nav-btn {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all var(--transition-speed);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        backdrop-filter: blur(10px);
+      }
+
+      .nav-btn:hover,
+      .nav-btn:focus {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(74, 144, 226, 0.4);
+        outline: none;
+      }
+
+      /* Main Content */
+      main {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+
+      /* Dashboard Section */
+      .section-title {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+        border-bottom: 3px solid var(--primary-color);
+        padding-bottom: 0.4rem;
+        color: var(--primary-color-dark);
+        font-weight: 700;
+      }
+
+      .progress-summary {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 18px var(--shadow-light);
+        user-select: none;
+      }
+
+      .progress-item {
+        text-align: center;
+        flex: 1;
+        margin: 0 10px;
+      }
+
+      .progress-item .number {
+        font-size: 3rem;
+        font-weight: 900;
+        color: var(--primary-color);
+        user-select: text;
+      }
+
+      .progress-item div:last-child {
+        margin-top: 6px;
+        font-weight: 600;
+        color: #444;
+      }
+
+      .topics {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1.75rem;
+      }
+
+      .topic-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.1rem 1.5rem;
+        box-shadow: 0 6px 15px var(--shadow-light);
+        transition: transform var(--transition-speed),
+          box-shadow var(--transition-speed);
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .topic-card:hover,
+      .topic-card:focus {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px var(--shadow-strong);
+        outline: none;
+      }
+
+      .topic-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.45rem;
+        color: var(--primary-color-dark);
+      }
+
+      .topic-desc {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.3;
+      }
+
+      .notifications {
+        background: white;
+        margin-top: 2.5rem;
+        padding: 1.3rem 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 8px 18px var(--shadow-light);
+        user-select: none;
+      }
+
+      .notification-item {
+        padding: 0.55rem 0;
+        border-bottom: 1px solid #e1eaf4;
+        font-size: 1rem;
+        color: #444;
+        line-height: 1.4;
+        user-select: text;
+      }
+
+      .notification-item:last-child {
+        border-bottom: none;
+      }
+
+      /* Profile Section */
+      .profile-container {
+        max-width: 900px;
+        margin: 2rem auto;
+        background: white;
+        padding: 24px 30px;
+        border-radius: 12px;
+        box-shadow: 0 12px 28px var(--shadow-light);
+      }
+
+      .profile-h2 {
+        color: var(--primary-color-dark);
+        font-weight: 800;
+        margin-bottom: 20px;
+        user-select: text;
+      }
+
+      .profile-section {
+        margin-bottom: 36px;
+      }
+
+      .profile-stats {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 28px;
+        gap: 20px;
+      }
+
+      .profile-stat-card {
+        background: var(--card-background);
+        padding: 20px 35px;
+        border-radius: 12px;
+        text-align: center;
+        flex: 1;
+        box-shadow: 0 6px 15px var(--shadow-light);
+        user-select: text;
+      }
+
+      .profile-stat-card h3 {
+        margin: 0;
+        color: var(--primary-color);
+        font-size: 2.3rem;
+        font-weight: 900;
+        letter-spacing: 0.06em;
+      }
+
+      .profile-stat-card p {
+        margin: 8px 0 0;
+        color: #2d3e69cc;
+        font-weight: 600;
+        font-size: 1rem;
+      }
+
+      .strengths-weaknesses {
+        display: flex;
+        justify-content: space-between;
+        gap: 25px;
+      }
+
+      .sw-column {
+        background: #f6faff;
+        padding: 20px 25px;
+        border-radius: 12px;
+        flex: 1;
+        user-select: text;
+      }
+
+      .sw-column h3 {
+        margin-top: 0;
+        margin-bottom: 14px;
+        color: var(--primary-color-dark);
+        font-weight: 700;
+      }
+
+      .profile-list {
+        padding-left: 20px;
+        margin-top: 0;
+      }
+
+      .profile-list li {
+        margin-bottom: 7px;
+        color: #3b4a68;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      .recommendations h3 {
+        color: var(--primary-color-dark);
+        margin-bottom: 15px;
+        font-weight: 700;
+        user-select: text;
+      }
+
+      .recommendations ul {
+        list-style-type: disc;
+        padding-left: 24px;
+      }
+
+      .chart-container {
+        width: 100%;
+        max-width: 800px;
+        margin-top: 20px;
+        user-select: none;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--primary-color-dark);
+        color: white;
+        text-align: center;
+        padding: 2rem;
+        margin-top: 4rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-link {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .footer-link:hover {
+        color: white;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1.5rem;
+        }
+        .header-nav {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        .progress-summary,
+        .profile-stats {
+          flex-direction: column;
+          gap: 1.3rem;
+        }
+        .progress-item,
+        .profile-stat-card {
+          margin: 0;
+        }
+        .topics {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        .strengths-weaknesses {
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+        .footer-links {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header with Navigation Buttons -->
+    <header>
+      <h1 class="header-title">NeuroSymbolic AI STEM Tutor Dashboard</h1>
+      <div class="header-nav">
+        <a href="index.html" class="nav-btn" aria-label="Go to Concepts"
+          >🔐 LOG IN
+        </a>
+        <a
+          href="STEM_sections.html"
+          class="nav-btn"
+          aria-label="Go to Concepts"
+        >
+          📚 Concepts
+        </a>
+        <a
+          href="explanation_reasoning.html"
+          class="nav-btn"
+          aria-label="Go to Concepts"
+          >📑 Reasoning
+        </a>
+        <a
+          href="settings_help_page.html"
+          class="nav-btn"
+          aria-label="Open Settings"
+        >
+          ⚙️ Settings
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <!-- Dashboard Section -->
+      <section aria-label="Dashboard Overview">
+        <h2 class="section-title">Your Progress Summary</h2>
+        <div class="progress-summary" id="progressSummary"></div>
+
+        <h2 class="section-title">Available STEM Topics</h2>
+        <div class="topics" id="topicsContainer"></div>
+
+        <h2 class="section-title">Notifications</h2>
+        <div class="notifications" id="notificationsContainer"></div>
+      </section>
+
+      <!-- Profile Section -->
+      <section
+        class="profile-container"
+        aria-label="Student Profile and Learning Analytics"
+      >
+        <h2 class="profile-h2">Student Profile & Learning Analytics</h2>
+
+        <div class="profile-section profile-stats">
+          <div class="profile-stat-card">
+            <h3>27</h3>
+            <p>Concepts Mastered</p>
+          </div>
+          <div class="profile-stat-card">
+            <h3>18</h3>
+            <p>Concepts Pending</p>
+          </div>
+          <div class="profile-stat-card">
+            <h3>87%</h3>
+            <p>Average Score</p>
+          </div>
+        </div>
+
+        <div class="profile-section strengths-weaknesses">
+          <div class="sw-column">
+            <h3>✅ Strengths</h3>
+            <ul class="profile-list">
+              <li>Algebraic Equations (95%)</li>
+              <li>Vector Calculus (92%)</li>
+              <li>Python Programming (89%)</li>
+              <li>Trigonometric Functions (87%)</li>
+              <li>Data Structures (85%)</li>
+            </ul>
+          </div>
+          <div class="sw-column">
+            <h3>⚠️ Weaknesses</h3>
+            <ul class="profile-list">
+              <li>Differential Equations (68%)</li>
+              <li>Graph Theory (72%)</li>
+              <li>Machine Learning Basics (75%)</li>
+              <li>3D Geometry (78%)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="profile-section recommendations">
+          <h3>🎯 Personalized Practice Recommendations</h3>
+          <ul class="profile-list">
+            <li>Practice Differential Equations (10 problems)</li>
+            <li>Review Graph Theory traversals (15 problems)</li>
+            <li>Complete ML Linear Regression module</li>
+            <li>Solve 3D coordinate geometry problems</li>
+            <li>Strengthen Python recursion techniques</li>
+          </ul>
+        </div>
+
+        <div class="profile-section">
+          <h3>📈 Progress Visualization</h3>
+          <div class="chart-container">
+            <canvas
+              id="progressChart"
+              aria-label="Student progress chart"
+              role="img"
+            ></canvas>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-links">
+          <a href="#" class="footer-link">Privacy Policy</a>
+          <a href="#" class="footer-link">Terms of Service</a>
+          <a href="#" class="footer-link">Contact Support</a>
+          <a href="#" class="footer-link">Help Center</a>
+        </div>
+        <p>
+          &copy; 2025 NeuroSymbolic AI Tutor. All rights reserved. | Built for
+          STEM Education Excellence
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Static data for dashboard
+      const dashboardData = {
+        progress: [
+          { label: "Mastered Concepts", number: 12 },
+          { label: "Pending Lessons", number: 5 },
+          { label: "Quizzes Completed", number: 3 },
+        ],
+        topics: [
+          {
+            title: "Algebra Basics",
+            description:
+              "Learn fundamental algebraic operations and equations.",
+          },
+          {
+            title: "Physics Mechanics",
+            description: "Explore motion, forces, and basic physical laws.",
+          },
+          {
+            title: "Programming Foundations",
+            description: "Understand programming concepts and algorithms.",
+          },
+          {
+            title: "Geometry",
+            description: "Study shapes, angles, and geometric reasoning.",
+          },
+          {
+            title: "Calculus Intro",
+            description: "Differentiation and integration fundamentals.",
+          },
+        ],
+        notifications: [
+          "New quiz available: Algebra Basics - Due Nov 25",
+          "Assignment feedback received for Physics Mechanics",
+          "Recommended practice: Calculus Intro problems",
+        ],
+      };
+
+      // Static data for profile chart
+      const profileData = {
+        progressHistory: [
+          { date: "Week 1", score: 72 },
+          { date: "Week 2", score: 78 },
+          { date: "Week 3", score: 82 },
+          { date: "Week 4", score: 85 },
+          { date: "Week 5", score: 87 },
+          { date: "Week 6", score: 89 },
+        ],
+      };
+
+      // Load dashboard contents
+      function loadDashboard() {
+        const progressSummary = document.getElementById("progressSummary");
+        progressSummary.innerHTML = "";
+        dashboardData.progress.forEach((item) => {
+          const div = document.createElement("div");
+          div.className = "progress-item";
+          div.innerHTML = `<div class="number">${item.number}</div><div>${item.label}</div>`;
+          progressSummary.appendChild(div);
+        });
+
+        const topicsContainer = document.getElementById("topicsContainer");
+        topicsContainer.innerHTML = "";
+        dashboardData.topics.forEach((topic) => {
+          const card = document.createElement("div");
+          card.className = "topic-card";
+          card.tabIndex = 0;
+          card.innerHTML = `
+            <div class="topic-title">${topic.title}</div>
+            <div class="topic-desc">${topic.description}</div>
+          `;
+          topicsContainer.appendChild(card);
+        });
+
+        const notificationsContainer = document.getElementById(
+          "notificationsContainer"
+        );
+        notificationsContainer.innerHTML = "";
+        dashboardData.notifications.forEach((note) => {
+          const div = document.createElement("div");
+          div.className = "notification-item";
+          div.textContent = note;
+          notificationsContainer.appendChild(div);
+        });
+      }
+
+      // Load profile chart
+      function loadProfileChart() {
+        const ctx = document.getElementById("progressChart").getContext("2d");
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: profileData.progressHistory.map((p) => p.date),
+            datasets: [
+              {
+                label: "Test Scores Over Time",
+                data: profileData.progressHistory.map((p) => p.score),
+                borderColor: "rgba(74,144,226,0.85)",
+                backgroundColor: "rgba(74,144,226,0.3)",
+                fill: true,
+                tension: 0.3,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                suggestedMin: 50,
+                suggestedMax: 100,
+                title: { display: true, text: "Score (%)" },
+                ticks: { stepSize: 5 },
+              },
+              x: {
+                title: { display: true, text: "Date" },
+              },
+            },
+            responsive: true,
+            plugins: { legend: { display: true, position: "top" } },
+          },
+        });
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        loadDashboard();
+        loadProfileChart();
+      });
+    </script>
+  </body>
+</html>
